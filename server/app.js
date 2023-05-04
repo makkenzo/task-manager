@@ -174,6 +174,34 @@ app.post('/boards/:boardId/tasks', async (req, res) => {
     }
 });
 
+app.put('/boards/:boardId/tasks/:id', async (req, res) => {
+    try {
+        const { boardId, id } = req.params;
+        const { title, description, status, priority } = req.body;
+
+        const collection = client.db(dbName).collection('Boards');
+        const board = await collection.findOne({ _id: new ObjectId(boardId) });
+        const task = board.tasks.find((task) => task._id.toString() === id);
+
+        if (!task) {
+            res.status(404).json({ msg: 'Task not found.' });
+        } else {
+            task.title = title || task.title;
+            task.description = description || task.description;
+            task.status = status || task.status;
+            task.priority = priority || task.priority;
+            task.updated_at = new Date();
+
+            await collection.updateOne({ _id: new ObjectId(boardId) }, { $set: { tasks: board.tasks } });
+
+            res.status(200).json(task);
+        }
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ msg: `Server error: ${err}` });
+    }
+});
+
 app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);
 });
