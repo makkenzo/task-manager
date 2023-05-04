@@ -26,6 +26,7 @@ app.get('/boards', async (req, res) => {
     }
 });
 
+// GET endpoint for the '/boards/:id' route.
 app.get('/boards/:id', async (req, res) => {
     try {
         const { id } = req.params;
@@ -54,6 +55,31 @@ app.post('/boards', async (req, res) => {
         const result = await collection.insertOne(board);
 
         res.status(201).json({ msg: `Board '${name}' created successfully` });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ msg: `Server error: ${err}` });
+    }
+});
+
+app.put('/boards/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { name, description } = req.body;
+
+        const collection = client.db(dbName).collection('Boards');
+        const board = await collection.findOne({ _id: new ObjectId(id) });
+
+        if (!board) {
+            res.status(404).json({ msg: 'Board not found.' });
+        } else {
+            board.name = name || board.name;
+            board.description = description || board.description;
+            board.updated_at = new Date();
+
+            await collection.updateOne({ _id: new ObjectId(id) }, { $set: board });
+
+            res.status(200).json(board);
+        }
     } catch (err) {
         console.log(err);
         res.status(500).json({ msg: `Server error: ${err}` });
