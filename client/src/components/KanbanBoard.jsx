@@ -1,6 +1,6 @@
 import TaskCard from './TaskCard';
 
-const KanbanBoard = ({ tasks, onTaskStatusChange }) => {
+const KanbanBoard = ({ tasks }) => {
     const toDoTasks = tasks.filter((task) => task.status == 'toDo');
     const inProgressTasks = tasks.filter((task) => task.status === 'inProgress');
     const doneTasks = tasks.filter((task) => task.status === 'done');
@@ -16,7 +16,6 @@ const KanbanBoard = ({ tasks, onTaskStatusChange }) => {
                         description={task.description}
                         priority={task.priority}
                         status={task.status}
-                        onTaskStatusChange={(newStatus) => onTaskStatusChange(task._id, newStatus)}
                     />
                 ))}
             </div>
@@ -29,7 +28,6 @@ const KanbanBoard = ({ tasks, onTaskStatusChange }) => {
                         description={task.description}
                         priority={task.priority}
                         status={task.status}
-                        onTaskStatusChange={(newStatus) => onTaskStatusChange(task._id, newStatus)}
                     />
                 ))}
             </div>
@@ -43,7 +41,6 @@ const KanbanBoard = ({ tasks, onTaskStatusChange }) => {
                         description={task.description}
                         priority={task.priority}
                         status={task.status}
-                        onTaskStatusChange={(newStatus) => onTaskStatusChange(task._id, newStatus)}
                     />
                 ))}
             </div>

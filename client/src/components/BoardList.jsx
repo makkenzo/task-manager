@@ -1,4 +1,4 @@
-const BoardList = ({ boards, selectedBoard, onBoardSelect, onBoardAdd }) => {
+const BoardList = ({ boards, selectedBoard, onBoardSelect }) => {
     return (
         <div className="h-full bg-gray-100 px-4 py-8 flex flex-col">
             <h3 className="text-lg font-medium mb-4">Boards</h3>
@@ -16,10 +16,7 @@ const BoardList = ({ boards, selectedBoard, onBoardSelect, onBoardAdd }) => {
                 ))}
             </ul>
             <div className="mt-4">
-                <button
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                    onClick={onBoardAdd}
-                >
+                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                     Add board
                 </button>
             </div>
