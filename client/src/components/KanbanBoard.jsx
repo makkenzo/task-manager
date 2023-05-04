@@ -38,6 +38,7 @@ const KanbanBoard = ({ tasks, onTaskStatusChange }) => {
                 {doneTasks.map((task) => (
                     <TaskCard
                         key={task._id}
+                        id={task._id}
                         title={task.title}
                         description={task.description}
                         priority={task.priority}

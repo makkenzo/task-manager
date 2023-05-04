@@ -28,7 +28,7 @@ const App = () => {
         };
 
         fetchData();
-    }, []);
+    }, [selectedBoard]);
 
     const onBoardSelect = (boardId) => {
         setSelectedBoard(boardId);
@@ -39,7 +39,6 @@ const App = () => {
     const onTaskStatusChange = (taskId, newStatus) => {};
 
     const selectedBoards = boards.find((board) => board._id === selectedBoard);
-    const selectedTasks = tasks.filter((task) => task.boardId === selectedBoard);
 
     return (
         <div className="flex h-screen">
@@ -53,7 +52,7 @@ const App = () => {
             </div>
             <div className="flex-1 p-4">
                 <h1 className="text-2xl font-bold mb-4">{selectedBoards?.name}</h1>
-                <KanbanBoard tasks={selectedTasks} onTaskStatusChange={onTaskStatusChange} />
+                <KanbanBoard tasks={tasks} onTaskStatusChange={onTaskStatusChange} />
             </div>
         </div>
     );
