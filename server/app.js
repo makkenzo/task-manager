@@ -121,6 +121,59 @@ app.get('/boards/:boardId/tasks', async (req, res) => {
     }
 });
 
+// GET endpoint for the '/boards/:boardId/tasks/:id' route.
+app.get('/boards/:boardId/tasks/:id', async (req, res) => {
+    try {
+        const { boardId, id } = req.params;
+
+        const collection = client.db(dbName).collection('Boards');
+        const board = await collection.findOne({ _id: new ObjectId(boardId) });
+        const task = board.tasks.find((task) => task._id.toString() === id);
+
+        if (!task) {
+            return res.status(404).json({ msg: 'Task not found' });
+        }
+
+        res.status(200).json(task);
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ msg: `Server error: ${err}` });
+    }
+});
+
+app.post('/boards/:boardId/tasks', async (req, res) => {
+    try {
+        const { boardId } = req.params;
+        const { title, description, status, priority } = req.body;
+
+        const collection = client.db(dbName).collection('Boards');
+
+        const newTask = {
+            _id: new ObjectId(),
+            title,
+            description,
+            status,
+            priority,
+            created_at: new Date(),
+            updated_at: new Date(),
+        };
+
+        const result = collection.updateOne(
+            { _id: new ObjectId(boardId) },
+            { $push: { tasks: newTask }, $set: { updated_at: new Date() } }
+        );
+
+        if (result.modifiedCount === 0) {
+            return res.status(404).json({ msg: 'Board not found' });
+        }
+
+        res.status(200).json(newTask);
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ msg: `Server error: ${err}` });
+    }
+});
+
 app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);
 });
