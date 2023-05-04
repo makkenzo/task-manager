@@ -7,7 +7,7 @@
     },
     "servers": [
         {
-            "url": "http://localhost:3000",
+            "url": "http://localhost:5000",
             "description": "Local server"
         }
     ],
@@ -17,7 +17,7 @@
                 "summary": "Get all boards",
                 "responses": {
                     "200": {
-                        "description": "Successful response",
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -28,6 +28,321 @@
                                 }
                             }
                         }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Create a new board",
+                "requestBody": {
+                    "description": "Board object to be created",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Board"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Board created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Board"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/boards/{id}": {
+            "get": {
+                "summary": "Get a board by ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the board to retrieve",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "objectid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Board"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "summary": "Update a board by ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the board to update",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "objectid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Board object to be updated",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Board"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Board updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Board"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete a board by ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the board to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "objectid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "404": {
+                        "description": "Board not found"
+                    }
+                }
+            }
+        },
+        "/boards/{boardId}/tasks": {
+            "get": {
+                "summary": "Get all tasks for a board",
+                "parameters": [
+                    {
+                        "name": "boardId",
+                        "in": "path",
+                        "description": "ID of the board to get tasks for",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "objectid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Task"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Board not found"
+                    }
+                }
+            },
+            "post": {
+                "summary": "Create a new task for a board",
+                "parameters": [
+                    {
+                        "name": "boardId",
+                        "in": "path",
+                        "description": "ID of the board to create a task for",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "objectid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Task object to be created",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Task"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Task"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Board not found"
+                    }
+                }
+            }
+        },
+        "/boards/{boardId}/tasks/{id}": {
+            "get": {
+                "summary": "Get a task by ID for a board",
+                "parameters": [
+                    {
+                        "name": "boardId",
+                        "in": "path",
+                        "description": "ID of the board to get the task from",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "objectid"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the task to get",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "objectid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Task"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Task not found"
+                    }
+                }
+            },
+            "put": {
+                "summary": "Update a task by ID for a board",
+                "parameters": [
+                    {
+                        "name": "boardId",
+                        "in": "path",
+                        "description": "ID of the board to update the task in",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "objectid"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the task to update",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "objectid"
+                        }
+                    },
+                    {
+                        "name": "task",
+                        "in": "body",
+                        "description": "Task object",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/Task"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Task"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Task not found"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete a task by ID for a board",
+                "parameters": [
+                    {
+                        "name": "boardId",
+                        "in": "path",
+                        "description": "ID of the board to delete the task from",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "objectid"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the task to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "objectid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Task deleted successfully."
+                    },
+                    "404": {
+                        "description": "Not Found"
                     }
                 }
             }
