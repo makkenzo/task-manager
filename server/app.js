@@ -106,6 +106,21 @@ app.delete('/boards/:id', async (req, res) => {
     }
 });
 
+// GET endpoint for the '/boards/:boardId/tasks' route.
+app.get('/boards/:boardId/tasks', async (req, res) => {
+    try {
+        const { boardId } = req.params;
+
+        const collection = client.db(dbName).collection('Boards');
+        const board = await collection.findOne({ _id: new ObjectId(boardId) });
+
+        res.status(200).json(board.tasks);
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ msg: `Server error: ${err}` });
+    }
+});
+
 app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);
 });
