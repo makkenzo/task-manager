@@ -8,7 +8,7 @@ const KanbanBoard = ({ tasks }) => {
     return (
         <div className="flex flex-1">
             <div className="flex-1">
-                <h2 className="text-xl font-medium mb-4">To Do</h2>
+                <h2 className="text-xl font-medium mb-4 text-center">To Do</h2>
                 {toDoTasks.map((task) => (
                     <TaskCard
                         key={task._id}
@@ -20,7 +20,7 @@ const KanbanBoard = ({ tasks }) => {
                 ))}
             </div>
             <div className="flex-1">
-                <h2 className="text-xl font-medium mb-4">In Progress</h2>
+                <h2 className="text-xl font-medium mb-4 text-center">In Progress</h2>
                 {inProgressTasks.map((task) => (
                     <TaskCard
                         key={task._id}
@@ -32,7 +32,7 @@ const KanbanBoard = ({ tasks }) => {
                 ))}
             </div>
             <div className="flex-1">
-                <h2 className="text-xl font-medium mb-4">Done</h2>
+                <h2 className="text-xl font-medium mb-4 text-center">Done</h2>
                 {doneTasks.map((task) => (
                     <TaskCard
                         key={task._id}

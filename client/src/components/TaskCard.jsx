@@ -1,6 +1,6 @@
 const TaskCard = ({ id, title, description, priority, status, onStatusChange }) => {
     return (
-        <div className="border rounded-lg shadow-md p-4 mb-4">
+        <div className="border rounded-lg shadow-md p-4 mb-4 mx-auto max-w-md">
             <h3 className="text-lg font-medium mb-2">{title}</h3>
             <p className="text-gray-500 mb-2">{description}</p>
             <div className="flex justify-between items-center">
