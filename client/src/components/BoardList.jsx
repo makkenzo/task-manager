@@ -5,11 +5,11 @@ const BoardList = ({ boards, selectedBoard, onBoardSelect, onBoardAdd }) => {
             <ul className="flex-1 overflow-y-auto">
                 {boards.map((board) => (
                     <li
-                        key={board.id}
+                        key={board._id}
                         className={`mb-2 p-2 rounded-md cursor-pointer ${
-                            board.id === selectedBoard ? 'bg-blue-200' : ''
+                            board._id === selectedBoard ? 'bg-blue-200' : ''
                         }`}
-                        onClick={() => onBoardSelect(board.id)}
+                        onClick={() => onBoardSelect(board._id)}
                     >
                         {board.name}
                     </li>

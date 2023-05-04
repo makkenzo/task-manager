@@ -11,12 +11,12 @@ const KanbanBoard = ({ tasks, onTaskStatusChange }) => {
                 <h2 className="text-xl font-medium mb-4">To Do</h2>
                 {toDoTasks.map((task) => (
                     <TaskCard
-                        key={task.id}
+                        key={task._id}
                         title={task.title}
                         description={task.description}
                         priority={task.priority}
                         status={task.status}
-                        onTaskStatusChange={(newStatus) => onTaskStatusChange(task.id, newStatus)}
+                        onTaskStatusChange={(newStatus) => onTaskStatusChange(task._id, newStatus)}
                     />
                 ))}
             </div>
@@ -24,12 +24,12 @@ const KanbanBoard = ({ tasks, onTaskStatusChange }) => {
                 <h2 className="text-xl font-medium mb-4">In Progress</h2>
                 {inProgressTasks.map((task) => (
                     <TaskCard
-                        key={task.id}
+                        key={task._id}
                         title={task.title}
                         description={task.description}
                         priority={task.priority}
                         status={task.status}
-                        onTaskStatusChange={(newStatus) => onTaskStatusChange(task.id, newStatus)}
+                        onTaskStatusChange={(newStatus) => onTaskStatusChange(task._id, newStatus)}
                     />
                 ))}
             </div>
@@ -37,12 +37,12 @@ const KanbanBoard = ({ tasks, onTaskStatusChange }) => {
                 <h2 className="text-xl font-medium mb-4">Done</h2>
                 {doneTasks.map((task) => (
                     <TaskCard
-                        key={task.id}
+                        key={task._id}
                         title={task.title}
                         description={task.description}
                         priority={task.priority}
                         status={task.status}
-                        onTaskStatusChange={(newStatus) => onTaskStatusChange(task.id, newStatus)}
+                        onTaskStatusChange={(newStatus) => onTaskStatusChange(task._id, newStatus)}
                     />
                 ))}
             </div>
