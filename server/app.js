@@ -13,6 +13,7 @@ const dbName = 'TaskManagerDB';
 
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
+// GET endpoint for the '/boards' route.
 app.get('/boards', async (req, res) => {
     try {
         const collection = client.db(dbName).collection('Boards');
@@ -25,6 +26,25 @@ app.get('/boards', async (req, res) => {
     }
 });
 
+app.get('/boards/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const collection = client.db(dbName).collection('Boards');
+        const board = await collection.findOne({ _id: new ObjectId(id) });
+
+        if (!board) {
+            res.status(404).json({ msg: 'Board not found.' });
+        } else {
+            res.status(200).json(board);
+        }
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ msg: `Server error: ${err}` });
+    }
+});
+
+// POST endpoint for the '/boards' route.
 app.post('/boards', async (req, res) => {
     try {
         const { name, description } = req.body;
