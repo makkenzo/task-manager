@@ -29,6 +29,14 @@ const tasksData = [
         priority: 'Low',
         status: 'done',
     },
+    {
+        id: 4,
+        boardId: 1,
+        title: 'Task 5',
+        description: 'Description for Task 5',
+        priority: 'Low',
+        status: 'done',
+    },
 ];
 
 const App = () => {

@@ -4,11 +4,17 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "server": "nodemon index.js"
+        "server": "nodemon app.js"
     },
     "author": "makkenzo",
     "license": "MIT",
     "devDependencies": {
         "nodemon": "^2.0.22"
+    },
+    "dependencies": {
+        "cors": "^2.8.5",
+        "dotenv": "^16.0.3",
+        "express": "^4.18.2",
+        "mongodb": "^5.3.0"
     }
 }
