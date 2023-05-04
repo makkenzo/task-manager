@@ -61,6 +61,7 @@ app.post('/boards', async (req, res) => {
     }
 });
 
+// PUT endpoint for the '/boards/:id' route.
 app.put('/boards/:id', async (req, res) => {
     try {
         const { id } = req.params;
@@ -79,6 +80,25 @@ app.put('/boards/:id', async (req, res) => {
             await collection.updateOne({ _id: new ObjectId(id) }, { $set: board });
 
             res.status(200).json(board);
+        }
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ msg: `Server error: ${err}` });
+    }
+});
+
+// DELETE endpoint for the '/boards/:id' route.
+app.delete('/boards/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const collection = client.db(dbName).collection('Boards');
+        const result = await collection.deleteOne({ _id: new ObjectId(id) });
+
+        if (result.deletedCount === 0) {
+            res.status(404).json({ msg: 'Board not found.' });
+        } else {
+            res.status(200).json({ msg: `Board '${id}' deleted successfully.` });
         }
     } catch (err) {
         console.log(err);
