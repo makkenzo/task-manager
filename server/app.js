@@ -141,6 +141,7 @@ app.get('/boards/:boardId/tasks/:id', async (req, res) => {
     }
 });
 
+// POST endpoint for the '/boards/:boardId/tasks' route.
 app.post('/boards/:boardId/tasks', async (req, res) => {
     try {
         const { boardId } = req.params;
@@ -174,6 +175,7 @@ app.post('/boards/:boardId/tasks', async (req, res) => {
     }
 });
 
+// PUT endpoint for the '/boards/:boardId/tasks/:id' route.
 app.put('/boards/:boardId/tasks/:id', async (req, res) => {
     try {
         const { boardId, id } = req.params;
@@ -196,6 +198,28 @@ app.put('/boards/:boardId/tasks/:id', async (req, res) => {
 
             res.status(200).json(task);
         }
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ msg: `Server error: ${err}` });
+    }
+});
+
+// DELETE endpoint for the '/boards/:boardId/tasks/:id' route.
+app.delete('/boards/:boardId/tasks/:id', async (req, res) => {
+    try {
+        const { boardId, id } = req.params;
+
+        const collection = client.db(dbName).collection('Boards');
+        const result = await collection.updateOne(
+            { _id: new ObjectId(boardId) },
+            { $pull: { tasks: { _id: new ObjectId(id) } } }
+        );
+
+        if (result.modifiedCount === 0) {
+            return res.status(404).json({ msg: 'Task not found.' });
+        }
+
+        res.status(200).json({ msg: 'Task deleted successfully.' });
     } catch (err) {
         console.log(err);
         res.status(500).json({ msg: `Server error: ${err}` });
